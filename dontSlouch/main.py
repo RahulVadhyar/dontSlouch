@@ -26,7 +26,7 @@ progress_label = ttk.Label(progress_frame, text = 'Progress', font= ('Arial', 40
 #Tab 2: Camera Tab --------------------------------------------------------
 camera_frame = ttk.Frame(notebook)
 camera_label = ttk.Label(camera_frame, text = 'Camera', font= ('Arial', 40))
-label_widget = ttk.Label(camera_frame) 
+label_widget = ttk.Label(camera_frame, padding = [0, 50, 0, 0]) 
 label_widget.pack() 
 # Define a video capture object 
 vid = cv2.VideoCapture(0) 
@@ -54,9 +54,7 @@ def open_camera():
     label_widget.configure(image=photo_image) 
     # Repeat the same process after every 10 seconds 
     label_widget.after(10, open_camera)
-    
-button1 = Button(camera_frame, text="Open Camera", command=open_camera) 
-button1.pack() 
+open_camera()
 
 #Tab 3: Settings Tab--------------------------------------------------------
 settings_frame = ttk.Frame(notebook)
