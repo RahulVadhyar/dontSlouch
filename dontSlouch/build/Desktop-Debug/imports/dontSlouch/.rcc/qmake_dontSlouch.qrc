@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/qt/qml/dontSlouch">
-    <file alias="qmldir">/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml/dontSlouch/qmldir</file>
-  </qresource>
-</RCC>
-

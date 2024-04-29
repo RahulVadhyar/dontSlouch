@@ -1,9 +1,0 @@
-<RCC>
-  <qresource prefix="/qt/qml/dontSlouch/">
-    <file alias="Constants.qml">/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch/Constants.qml</file>
-    <file alias="DirectoryFontLoader.qml">/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch/DirectoryFontLoader.qml</file>
-    <file alias="EventListModel.qml">/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch/EventListModel.qml</file>
-    <file alias="EventListSimulator.qml">/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch/EventListSimulator.qml</file>
-  </qresource>
-</RCC>
-
