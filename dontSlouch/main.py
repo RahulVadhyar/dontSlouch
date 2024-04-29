@@ -18,13 +18,24 @@ window = ttk.Frame(root)
 sv_ttk.use_dark_theme()
 style = ttk.Style(root)
 style.configure('lefttab.TNotebook', tabposition='w', padding = [10, 0, 0, 0])
-
+currentProgress = 0
 
 #create a notebook(tabs interface)
 notebook = ttk.Notebook(window)
 #Tab 1: Progress Tab--------------------------------------------------------
 progress_frame = ttk.Frame(notebook)
 progress_label = ttk.Label(progress_frame, text = 'Progress', font= ('Arial', 40))
+def resetProgress():
+    currentProgress = 0
+reset_progress_button = ttk.Button(progress_frame, text = 'Reset Progress', command = resetProgress)
+reset_progress_button.pack(padx=10, pady=10, anchor = 'w')
+#graph of yearly, monthly, weekly and daily slouching
+#points earned by not slouching
+#points lost by slouching
+#pie chart of slouching vs not slouching
+#button to reset progress
+#congrats above a certain threshold
+progress_frame.pack(padx=10, pady=10, anchor = 'w')
 
 #Tab 2: Camera Tab --------------------------------------------------------
 camera_frame = ttk.Frame(notebook)
@@ -45,7 +56,7 @@ vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 def open_camera(): 
     # Capture the video frame by frame 
     _, frame = vid.read() 
-    frame = backend.backend(frame, device = "cpu")[0]  
+    # frame = backend.backend(frame, device = "cpu")[0]  
     # Convert image from one color space to other 
     opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
     # Capture the latest frame and transform to image 
