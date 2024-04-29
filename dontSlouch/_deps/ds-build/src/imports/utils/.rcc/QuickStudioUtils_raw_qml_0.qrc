@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="/QtQuick/Studio/Utils/">
-    <file alias="JsonListModel.qml">/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-src/src/imports/utils/JsonListModel.qml</file>
-    <file alias="JsonBackend.qml">/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-src/src/imports/utils/JsonBackend.qml</file>
-    <file alias="ChildListModel.qml">/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-src/src/imports/utils/ChildListModel.qml</file>
-  </qresource>
-</RCC>
-

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdontSlouch.a CMakeFiles/dontSlouch.dir/dontSlouch_autogen/mocs_compilation.cpp.o CMakeFiles/dontSlouch.dir/dontslouch_qmltyperegistrations.cpp.o CMakeFiles/dontSlouch.dir/.rcc/qmlcache/dontSlouch_Constants_qml.cpp.o CMakeFiles/dontSlouch.dir/.rcc/qmlcache/dontSlouch_DirectoryFontLoader_qml.cpp.o CMakeFiles/dontSlouch.dir/.rcc/qmlcache/dontSlouch_EventListModel_qml.cpp.o CMakeFiles/dontSlouch.dir/.rcc/qmlcache/dontSlouch_EventListSimulator_qml.cpp.o
-/usr/bin/ranlib libdontSlouch.a

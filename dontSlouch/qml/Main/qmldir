@@ -1,4 +1,0 @@
-module Main
-typeinfo dontSlouchApp.qmltypes
-prefer :/qt/qml/Main/
-

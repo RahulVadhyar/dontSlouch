@@ -1,3 +1,0 @@
-/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-subbuild/CMakeFiles/ds-populate.dir
-/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-subbuild/CMakeFiles/edit_cache.dir
-/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/_deps/ds-subbuild/CMakeFiles/rebuild_cache.dir
