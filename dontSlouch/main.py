@@ -1,4 +1,5 @@
 from tkinter import *
+from notifypy import Notify
 from tkinter import ttk
 import tkinter
 import sv_ttk
@@ -54,6 +55,11 @@ def open_camera():
     label_widget.configure(image=photo_image) 
     # Repeat the same process after every 10 seconds 
     label_widget.after(10, open_camera)
+    # notification = Notify()
+    # notification.title = "Priya is annoying"
+    # notification.message = "Why is she even born at this point"
+    # notification.send()
+
 open_camera()
 
 #Tab 3: Settings Tab--------------------------------------------------------
