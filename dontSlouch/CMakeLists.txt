@@ -2,16 +2,21 @@ cmake_minimum_required(VERSION 3.21.1)
 message(${CMAKE_SOURCE_DIR}/libtorch-cxx11-abi-shared-with-deps-2.3.0+cu121/libtorch/share/cmake/Torch)
 #set(Torch_DIR ${CMAKE_SOURCE_DIR}/libtorch-cxx11-abi-shared-with-deps-2.3.0+cu121/libtorch/share/cmake/Torch)
 set(Torch_DIR ${CMAKE_SOURCE_DIR}/libtorch-cxx11-abi-shared-with-deps-2.3.0+cpu/libtorch/share/cmake/Torch)
+set(OpenCV_DIR /usr/lib64/cmake/OpenCV/)
 
 find_package(Torch REQUIRED)
+find_package( OpenCV REQUIRED )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
+
+#include_directories( ${CMAKE_SOURCE_DIR}/opencv-4.8.1 )
 
 option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
 option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 
 project(dontSlouchApp LANGUAGES CXX)
 
-set(CUDA_PATH "/home/abdulamaan/miniconda3/envs/pytorch_stuff/lib/python3.10/site-packages/torch/share/cmake")
+#set(CUDA_PATH "/home/abdulamaan/miniconda3/envs/pytorch_stuff/lib/python3.10/site-packages/torch/share/cmake")
 
 set(CMAKE_AUTOMOC ON)
 
@@ -28,13 +33,13 @@ qt_add_resources(dontSlouchApp "configuration"
     FILES
         qtquickcontrols2.conf
 )
-
 target_link_libraries(dontSlouchApp PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
     "${TORCH_LIBRARIES}"
+    ${OpenCV_LIBS}
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
