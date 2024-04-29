@@ -114,30 +114,72 @@ class slouch_detection(nn.Module):
         )
     def forward(self,x):
         return self.layers(x)
-    
-def slouch_detector(x):
+
+def model_load(device):
+    model=slouch_detection()
+    model.load_state_dict(torch.load("model/slouch_detector.pt"))
+    model = model.to(device)
+    return model
+
+def slouch_detector(x,model):
     """  scaler=load(open('model/scaler.pkl', 'rb'))
     x=scaler.fit_transform(x) """
     x=torch.tensor(x)
-    model=slouch_detection()
-    model.load_state_dict(torch.load("model/slouch_detector.pt"))
-    model = model.to('cpu')
     with torch.inference_mode():
         model.eval()
         ans=model(x)
     return ans.item()
 
-font = cv2.FONT_HERSHEY_SIMPLEX
-blue = (255, 127, 0)
-red = (50, 50, 255)
-green = (127, 255, 0)
-dark_blue = (127, 20, 0)
-light_green = (127, 233, 100)
-yellow = (0, 255, 255)
-pink = (255, 0, 255)
+
+def backend(image,device="cpu",skeleton=True):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    blue = (255, 127, 0)
+    red = (50, 50, 255)
+    green = (127, 255, 0)
+    dark_blue = (127, 20, 0)
+    light_green = (127, 233, 100)
+    yellow = (0, 255, 255)
+    pink = (255, 0, 255)
+
+    if(image):
+        model = model_load(device)
+        mp_pose = mp.solutions.pose
+        pose=mp_pose.Pose(min_detection_confidence=0.8,min_tracking_confidence=0.8)
+
+        keypoints = pose.process(image)
+        lm = keypoints.pose_landmarks
+
+        x = process_image(image,lm,True)
+        if(len(x.shape)!=1):
+            res= slouch_detector(x,model)
+            #time.sleep(0.1)
+            #print(round(res,3))
+            result=""
+            color=red
+            if(res>0.3):
+                result="not slouching"
+                color=green
+            else:
+                result="slouching"
+            print(result)
+            if(skeleton):
+                draw_pose_landmarks(image,lm,color=color)
+    return (image,result,x,res)
+
+
 
 def main():
+    mp_pose = mp.solutions.pose
     # Initialize the webcam
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    blue = (255, 127, 0)
+    red = (50, 50, 255)
+    green = (127, 255, 0)
+    dark_blue = (127, 20, 0)
+    light_green = (127, 233, 100)
+    yellow = (0, 255, 255)
+    pink = (255, 0, 255)
+
     cap = cv2.VideoCapture(0) # this is the magic!
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -147,6 +189,8 @@ def main():
     if not cap.isOpened():
         print("Error: Unable to access the webcam.")
         return
+    device="cpu"
+    model = model_load(device)
     pose=mp_pose.Pose(min_detection_confidence=0.8,min_tracking_confidence=0.8)
     while True:
         # Capture frame-by-frame
@@ -195,7 +239,7 @@ def main():
 
         x = process_image(frame,lm,True)
         if(len(x.shape)!=1):
-            res= slouch_detector(x)
+            res= slouch_detector(x,model)
             #time.sleep(0.1)
             #print(round(res,3))
             result=""
