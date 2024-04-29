@@ -15,7 +15,7 @@ class Backend:
     
     def __init__(self,device="cpu"):
         self.model=slouch_detection()
-        self.model.load_state_dict(torch.load("../model/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("./model/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
         self.pose=mp_pose.Pose(min_detection_confidence=0.8,min_tracking_confidence=0.8)
@@ -126,6 +126,7 @@ class Backend:
                 #time.sleep(0.1)
                 #print(round(res,3))
                 color=self.red
+                print(self.res,x)
                 if(self.res>0.3):
                     self.result="not slouching"
                     color=self.green
