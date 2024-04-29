@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../qml/dontSlouch/libdontSlouchplugin.a CMakeFiles/dontSlouchplugin.dir/dontSlouchplugin_autogen/mocs_compilation.cpp.o CMakeFiles/dontSlouchplugin.dir/dontSlouchplugin_dontSlouchPlugin.cpp.o
+/usr/bin/ranlib ../../qml/dontSlouch/libdontSlouchplugin.a
