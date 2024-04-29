@@ -8,6 +8,7 @@ import torch
 from torch import nn
 import numpy as np
 from pickle import load
+import time
 mp_pose = mp.solutions.pose
 
 def findDistance(x1, y1, x2, y2):
@@ -27,8 +28,8 @@ def process_image(image, pose):
         return
 
     h, w = image.shape[:2]
-    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    keypoints = pose.process(image_rgb)
+    #image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    keypoints = pose.process(image)
     lm = keypoints.pose_landmarks
 
     if lm is not None:
@@ -52,6 +53,7 @@ class slouch_detection(nn.Module):
     def __init__(self):
         super(slouch_detection,self).__init__()
         self.layers = nn.Sequential(
+            nn.LayerNorm(9),
             nn.Linear(9,36),
             nn.ReLU(),
             nn.Linear(36,15),
@@ -71,14 +73,15 @@ class slouch_detection(nn.Module):
         return self.layers(x)
     
 def slouch_detector(x):
-    scaler=load(open('scaler.pkl', 'rb'))
-    x=scaler.fit_transform(x)
+    """  scaler=load(open('model/scaler.pkl', 'rb'))
+    x=scaler.fit_transform(x) """
     x=torch.tensor(x)
     model=slouch_detection()
-    model.load_state_dict(torch.load("slouch_detector.pt"))
+    model.load_state_dict(torch.load("model/slouch_detector.pt"))
     model = model.to('cpu')
-    ans=model(x)
-    print(ans.item())
+    with torch.inference_mode():
+        model.eval()
+        ans=model(x)
     return ans.item()
 
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -101,7 +104,7 @@ def main():
     if not cap.isOpened():
         print("Error: Unable to access the webcam.")
         return
-    
+    pose=mp_pose.Pose(min_detection_confidence=0.8,min_tracking_confidence=0.8)
     while True:
         # Capture frame-by-frame
         ret, frame = cap.read()
@@ -111,46 +114,46 @@ def main():
             print("Error: Unable to capture frame.")
             break
         
-        pose=mp_pose.Pose(min_detection_confidence=0.6,min_tracking_confidence=0.6)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        keypoints = pose.process(frame)
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        h, w = frame.shape[:2]
         
-        lm = keypoints.pose_landmarks
+        """ lm = keypoints.pose_landmarks
         lmPose = mp_pose.PoseLandmark
-        l_shldr_x = int(lm.landmark[lmPose.LEFT_SHOULDER].x * w)
-        l_shldr_y = int(lm.landmark[lmPose.LEFT_SHOULDER].y * h)
-        r_shldr_x = int(lm.landmark[lmPose.RIGHT_SHOULDER].x * w)
-        r_shldr_y = int(lm.landmark[lmPose.RIGHT_SHOULDER].y * h)
-        l_ear_x = int(lm.landmark[lmPose.LEFT_EAR].x * w)
-        l_ear_y = int(lm.landmark[lmPose.LEFT_EAR].y * h)
-        l_hip_x = int(lm.landmark[lmPose.LEFT_HIP].x * w)
-        l_hip_y = int(lm.landmark[lmPose.LEFT_HIP].y * h)
+        if lm is not None:
+            nose_x = lm.landmark[mp_pose.PoseLandmark.NOSE].x * w
+            nose_y = lm.landmark[mp_pose.PoseLandmark.NOSE].y * h
+            nose_z = lm.landmark[mp_pose.PoseLandmark.NOSE].z * h  # Calculating Z-axis position
+
+            l_shldr_x = lm.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].x * w
+            l_shldr_y = lm.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y * h
+            l_shldr_z = lm.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].z * h
+            r_shldr_x = lm.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w
+            r_shldr_y = lm.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h
+            r_shldr_z=lm.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].z * h
         offset = findDistance(l_shldr_x, l_shldr_y, r_shldr_x, r_shldr_y)
         if offset < 100:
             cv2.putText(frame, str(int(offset)) + ' Aligned', (w - 150, 30), font, 0.9, green, 2)
         else:
-            cv2.putText(frame, str(int(offset)) + ' Not Aligned', (w - 150, 30), font, 0.9, red, 2)
-        neck_inclination = findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
-        torso_inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
-        cv2.circle(frame, (l_shldr_x, l_shldr_y), 7, yellow, -1)
-        cv2.circle(frame, (l_ear_x, l_ear_y), 7, yellow, -1)
-        cv2.circle(frame, (l_shldr_x, l_shldr_y - 100), 7, yellow, -1)
-        cv2.circle(frame, (r_shldr_x, r_shldr_y), 7, pink, -1)
-        cv2.circle(frame, (l_hip_x, l_hip_y), 7, yellow, -1)
-        cv2.circle(frame, (l_hip_x, l_hip_y - 100), 7, yellow, -1)
+            cv2.putText(frame, str(int(offset)) + ' Not Aligned', (w - 150, 30), font, 0.9, red, 2) """
+        #neck_inclination = findAngle(l_shldr_x, l_shldr_y, nose_x, nose_y)
+        #torso_inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
+
+        """ cv2.circle(frame, (l_shldr_x, l_shldr_y - 100), 7, yellow, -1)
+        cv2.circle(frame, (r_shldr_x, r_shldr_y), 7, pink, -1) """
         
         
-        cv2.line(frame, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), green, 4)
-        cv2.line(frame, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), green, 4)
-        cv2.line(frame, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), green, 4)
-        cv2.line(frame, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), green, 4)
+        
+
+        #cv2.line(frame, (l_shldr_x, l_shldr_y), (r_shldr_x, r_shldr_y), green, 4)
 
 
         x = process_image(frame,pose)
-        res= slouch_detector(x)
+        if(x is not None):
+            #time.sleep(0.1)
+            res= slouch_detector(x)
+            #print(round(res,3))
+            if(res>0.3):
+                print("not slouching")
+            else:
+                print("slouching")
         # Display the captured frame
         cv2.imshow('Webcam', frame)
         
