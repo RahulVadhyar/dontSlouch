@@ -1,0 +1,12 @@
+-I
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/qml
+-I
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/qml
+-I
+/usr/lib64/qt6/qml
+--resource
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/imports/dontSlouch/.rcc/qmake_dontSlouch.qrc
+--resource
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/imports/dontSlouch/.rcc/dontSlouch_raw_qml_0.qrc
+--module
+dontSlouch

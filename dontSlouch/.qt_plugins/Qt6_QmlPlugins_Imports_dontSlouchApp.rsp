@@ -1,0 +1,15 @@
+-rootPath
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch
+-cmake-output
+-output-file
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/.qt_plugins/Qt6_QmlPlugins_Imports_dontSlouchApp.cmake
+-importPath
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/qml/Main
+-importPath
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/qml
+-importPath
+/usr/lib64/qt6/qml
+-qrcFiles
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/.rcc/configuration.qrc
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/.rcc/qmake_Main.qrc
+/home/abdulamaan/Desktop/amaan_files/BMS_stuff/6th_sem/gradient hackathon/dontSlouch/dontSlouch/.rcc/dontSlouchApp_raw_qml_0.qrc
