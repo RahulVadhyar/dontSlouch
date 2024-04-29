@@ -1,0 +1,16 @@
+--bare
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml
+-I
+/usr/lib64/qt6/qml
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-build/src/imports/utils/.rcc/qmake_QtQuick_Studio_Utils.qrc
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-build/src/imports/utils/.rcc/QuickStudioUtils_raw_qml_0.qrc
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-src/src/imports/utils/JsonListModel.qml
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-src/src/imports/utils/JsonBackend.qml
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-src/src/imports/utils/ChildListModel.qml
+--json
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/QuickStudioUtils_qmllint.json

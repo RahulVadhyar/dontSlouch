@@ -1,0 +1,8 @@
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmake_dontSlouch.qrc
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/dontSlouch_raw_qml_0.qrc
+/qt/qml/dontSlouch/Constants.qml
+/qt/qml/dontSlouch/DirectoryFontLoader.qml
+/qt/qml/dontSlouch/EventListModel.qml
+/qt/qml/dontSlouch/EventListSimulator.qml

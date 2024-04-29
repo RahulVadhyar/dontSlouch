@@ -1,0 +1,6 @@
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/content/.rcc/qmake_content.qrc
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/content/.rcc/content_raw_qml_0.qrc
+/qt/qml/content/App.qml
+/qt/qml/content/Screen01.ui.qml

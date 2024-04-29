@@ -1,70 +1,56 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.21.1)
 
-project(dontSlouch VERSION 0.1 LANGUAGES CXX)
+option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
+option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 
-set(CMAKE_AUTOUIC ON)
+project(dontSlouchApp LANGUAGES CXX)
+
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-)
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(dontSlouch
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET dontSlouch APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(dontSlouch SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(dontSlouch
-            ${PROJECT_SOURCES}
-        )
-    endif()
+if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
+    qt_standard_project_setup()
 endif()
 
-target_link_libraries(dontSlouch PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+qt_add_executable(dontSlouchApp src/main.cpp)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.dontSlouch)
-endif()
-set_target_properties(dontSlouch PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+qt_add_resources(dontSlouchApp "configuration"
+    PREFIX "/"
+    FILES
+        qtquickcontrols2.conf
 )
+
+target_link_libraries(dontSlouchApp PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Quick
+)
+
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
+set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
+    CACHE STRING "Import paths for Qt Creator's code model"
+    FORCE
+)
+
+if (BUILD_QDS_COMPONENTS)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/qmlcomponents)
+endif()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/qmlmodules)
+
+if (LINK_INSIGHT)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/insight)
+endif ()
 
 include(GNUInstallDirs)
-install(TARGETS dontSlouch
+install(TARGETS dontSlouchApp
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(dontSlouch)
-endif()
+# make IDEs aware of the QML import path
+set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
+    "Path to the custom QML components defined by the project")

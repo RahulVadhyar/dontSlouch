@@ -1,0 +1,129 @@
+{
+	"BUILD_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_autogen",
+	"CMAKE_BINARY_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/rahul/Documents/dontSlouch/dontSlouch/imports/dontSlouch/CMakeLists.txt",
+		"/usr/lib64/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
+		"/usr/lib64/cmake/Qt6Core/Qt6CoreResourceInit.in.cpp",
+		"/usr/lib64/cmake/Qt6Qml/Qt6QmlPluginTemplate.cpp.in",
+		"/usr/lib64/cmake/Qt6Qml/Qt6QmlModuleDirMappingTemplate.qrc.in",
+		"/usr/lib64/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
+		"/usr/lib64/cmake/Qt6Core/Qt6CoreResourceInit.in.cpp",
+		"/usr/lib64/cmake/Qt6Qml/Qt6qmldirTemplate.cmake.in",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_dontSlouchPlugin_in.cpp"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch",
+	"DEP_FILE" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "dontSlouchplugin_autogen/timestamp",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_DEPRECATED_WARNINGS",
+		"QT_NETWORK_LIB",
+		"QT_PLUGIN",
+		"QT_QMLBUILTINS_LIB",
+		"QT_QMLINTEGRATION_LIB",
+		"QT_QML_LIB",
+		"QT_STATICPLUGIN"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/usr/include/qt6/QtQml",
+		"/usr/include/qt6",
+		"/usr/include/qt6/QtCore",
+		"/usr/lib64/qt6/mkspecs/linux-g++",
+		"/usr/include/qt6/QtQmlIntegration",
+		"/usr/include/qt6/QtQmlBuiltins",
+		"/usr/include/qt6/QtNetwork",
+		"/usr/include/c++/14",
+		"/usr/include/c++/14/x86_64-redhat-linux",
+		"/usr/include/c++/14/backward",
+		"/usr/lib/gcc/x86_64-redhat-linux/14/include",
+		"/usr/local/include",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [ "-Muri=dontSlouch" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/g++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_Constants_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_DirectoryFontLoader_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_EventListModel_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_EventListSimulator_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_qmlcache_loader.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_dontSlouch_raw_qml_0.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_dontSlouch_raw_qml_0_init.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_qmake_dontSlouch.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_qmake_dontSlouch_init.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouch_autogen/mocs_compilation.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontslouch_qmltyperegistrations.cpp"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/CMakeFiles/dontSlouchplugin_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib64/qt6/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 7,
+	"SETTINGS_FILE" : "/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/CMakeFiles/dontSlouchplugin_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouchplugin_dontSlouchPlugin.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : 
+	[
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_Constants_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_DirectoryFontLoader_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_EventListModel_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_EventListSimulator_qml.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qmlcache/dontSlouch_qmlcache_loader.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_dontSlouch_raw_qml_0.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_dontSlouch_raw_qml_0_init.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_qmake_dontSlouch.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/.rcc/qrc_qmake_dontSlouch_init.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontSlouch_autogen/mocs_compilation.cpp",
+		"/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/imports/dontSlouch/dontslouch_qmltyperegistrations.cpp"
+	],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

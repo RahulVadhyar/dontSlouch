@@ -1,0 +1,14 @@
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml
+-I
+/usr/lib64/qt6/qml
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/.rcc/configuration.qrc
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/.rcc/qmake_Main.qrc
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/.rcc/dontSlouchApp_raw_qml_0.qrc
+--module
+Main

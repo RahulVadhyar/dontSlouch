@@ -1,0 +1,9 @@
+--bare
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml
+-I
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/qml
+-I
+/usr/lib64/qt6/qml
+--resource
+/home/rahul/Documents/dontSlouch/dontSlouch/build/Desktop-Debug/_deps/ds-build/src/imports/application/.rcc/qmake_QtQuick_Studio_Application.qrc
