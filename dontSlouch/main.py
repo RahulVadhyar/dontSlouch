@@ -6,7 +6,9 @@ import sv_ttk
 from tkinter.messagebox import showinfo
 import os
 import cv2
+import backend
 from PIL import Image, ImageTk 
+
 
 #configure the root window and set the ttk style
 root = tkinter.Tk()
@@ -43,6 +45,7 @@ vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 def open_camera(): 
     # Capture the video frame by frame 
     _, frame = vid.read() 
+    frame = backend.backend(frame, device = "cpu")[0]  
     # Convert image from one color space to other 
     opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
     # Capture the latest frame and transform to image 
