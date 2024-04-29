@@ -22,15 +22,28 @@ def findAngle(x1, y1, x2, y2):
     degree = int(180 / math.pi) * theta
     return degree
 
-def process_image(image, pose):
+def process_image(image, pose,draw_skeleton=False):
     if image is None:
         print(f"Failed to read image")
         return
-
     h, w = image.shape[:2]
     #image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     keypoints = pose.process(image)
     lm = keypoints.pose_landmarks
+
+    if(draw_skeleton):
+        if nose_x and nose_y:
+            cv2.circle(image, (int(nose_x), int(nose_y)), 7, pink, -1)
+        if l_shldr_x and l_shldr_y:
+            cv2.circle(image, (int(l_shldr_x), int(l_shldr_y)), 7, red, -1)
+        if r_shldr_x and r_shldr_y:
+            cv2.circle(image, (int(r_shldr_x), int(r_shldr_y)), 7, red, -1)
+
+        # Draw lines between shoulders and nose (assuming you have detection logic)
+        if l_shldr_x and l_shldr_y and r_shldr_x and r_shldr_y and nose_x and nose_y:
+            cv2.line(image, (int(l_shldr_x), int(l_shldr_y)), (int(r_shldr_x), int(r_shldr_y)), green, 2)
+            cv2.line(image, (int(l_shldr_x), int(l_shldr_y)), (int(nose_x), int(nose_y)), green, 2)
+            cv2.line(image, (int(r_shldr_x), int(r_shldr_y)), (int(nose_x), int(nose_y)), green, 2)
 
     if lm is not None:
         nose_x = lm.landmark[mp_pose.PoseLandmark.NOSE].x * w
@@ -45,7 +58,10 @@ def process_image(image, pose):
         r_shldr_z=lm.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].z * h
 
         # Write posture data to CSV file
-        return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_x,r_shldr_y,r_shldr_z],dtype=np.float32).reshape(1,-1)
+        if(not draw_skeleton):
+            return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_x,r_shldr_y,r_shldr_z],dtype=np.float32).reshape(1,-1)
+        else:
+            return image,np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_x,r_shldr_y,r_shldr_z],dtype=np.float32).reshape(1,-1)
     else:
         print(f"No landmarks detected in image ")
 
@@ -143,6 +159,9 @@ def main():
         
 
         #cv2.line(frame, (l_shldr_x, l_shldr_y), (r_shldr_x, r_shldr_y), green, 4)
+
+        # Draw circles on detected keypoints (assuming you have detection logic)
+        
 
 
         x = process_image(frame,pose)
