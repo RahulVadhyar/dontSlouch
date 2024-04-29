@@ -1,56 +1,83 @@
-cmake_minimum_required(VERSION 3.21.1)
+cmake_minimum_required(VERSION 3.13)
+project(Chronos VERSION 0.0.0)
+set(CMAKE_CXX_STANDARD 20)
 
-option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
-option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_FLAGS "-O3 -march=native")
 
-project(dontSlouchApp LANGUAGES CXX)
+set(GLFW_BUILD_WAYLAND ON)
 
-set(CMAKE_AUTOMOC ON)
+set(X11_X11_LIB who_cares)
+set(GLFW_BUILD_EXAMPLES OFF)
+set(GLFW_BUILD_TESTS OFF)
+set(GLFW_BUILD_DOCS OFF)
+set(GLFW_INSTALL OFF)
+set(GLFW_VULKAN_STATIC ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
+#GLFW
+add_subdirectory(ThirdParty/glfw)
+set(GLFW_DIR ThirdParty/glfw/include)
 
-if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
-    qt_standard_project_setup()
-endif()
+#source files
+set(SOURCE_DIR Source/Engine/Source)
+set(API_DIR Source/API/Source)
+file(GLOB MAIN ${SOURCE_DIR}/*.cpp)
+file(GLOB API ${API_DIR}/*.cpp)
 
-qt_add_executable(dontSlouchApp src/main.cpp)
+#get all the cpp files
+file(GLOB CHRONOS_CPP ${MAIN} ${API} )
 
-qt_add_resources(dontSlouchApp "configuration"
-    PREFIX "/"
-    FILES
-        qtquickcontrols2.conf
+#create a fucntion to include all the directories, also link vulkan and glfw
+function(IncludeDirectories projectName)
+    target_include_directories(${projectName} PUBLIC Source/Engine/Headers)
+    target_include_directories(${projectName} PUBLIC Source/Engine/Templates)
+    target_include_directories(${projectName} PUBLIC Source/API/Headers)
+    target_include_directories(${projectName} PUBLIC Source/Common/Headers)
+    target_include_directories(${projectName} PUBLIC ThirdParty/stb)
+    target_include_directories(${projectName} PUBLIC include)
+    target_include_directories(${projectName} PUBLIC ${GLFW_DIR})  
+    target_link_libraries(${projectName} vulkan)   
+    target_link_libraries(${projectName} glfw)
+
+endfunction()
+
+#editor executable
+set(EDITOR_DIR Source/Editor/Source)
+set(IMGUI_DIR ThirdParty/imgui) 
+set(IMGUI_BACKENDS ${IMGUI_DIR}/backends)
+
+file(GLOB EDITOR ${EDITOR_DIR}/*.cpp)
+file(GLOB IMGUI ${IMGUI_DIR}/*.cpp)
+file(GLOB EDITOR_FILES 
+${EDITOR} 
+${IMGUI} 
+${IMGUI_BACKENDS}/imgui_impl_glfw.cpp 
+${IMGUI_BACKENDS}/imgui_impl_vulkan.cpp
 )
 
-target_link_libraries(dontSlouchApp PRIVATE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Quick
-)
+# linking
+add_executable(ChronosEditor ${CHRONOS_CPP} ${EDITOR_FILES})
 
-set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
-set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
-    CACHE STRING "Import paths for Qt Creator's code model"
-    FORCE
-)
+#vulkan sdk if using windows
+if(WIN32)
+    target_include_directories(ChronosEditor PUBLIC ${VULKAN_SDK_INCLUDE})     
+    target_link_directories(ChronosEditor PUBLIC ${VULKAN_SDK_LIB})
+    message("Vulkan SDK include found: ${VULKAN_SDK_INCLUDE}")
+endif(WIN32) 
 
-if (BUILD_QDS_COMPONENTS)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/qmlcomponents)
-endif()
+target_compile_definitions(ChronosEditor PUBLIC ENABLE_EDITOR)
+target_compile_definitions(ChronosEditor PUBLIC ENABLE_VULKAN_VALIDATION_LAYERS)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/qmlmodules)
+target_compile_definitions(ChronosEditor PUBLIC GAME_NAME="dontSlouch")
+target_compile_definitions(ChronosEditor PUBLIC GAME_VERSION_MAJOR=0)
+target_compile_definitions(ChronosEditor PUBLIC GAME_VERSION_MINOR=0)
+target_compile_definitions(ChronosEditor PUBLIC GAME_VERSION_PATCH=0)
+target_compile_definitions(ChronosEditor PUBLIC CHRONOS_VERSION_MAJOR=0)
+target_compile_definitions(ChronosEditor PUBLIC CHRONOS_VERSION_MINOR=0)
+target_compile_definitions(ChronosEditor PUBLIC CHRONOS_VERSION_PATCH=0)
 
-if (LINK_INSIGHT)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/insight)
-endif ()
-
-include(GNUInstallDirs)
-install(TARGETS dontSlouchApp
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-# make IDEs aware of the QML import path
-set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
-    "Path to the custom QML components defined by the project")
+#header files
+target_include_directories(ChronosEditor PUBLIC Source/Editor/Headers)
+target_include_directories(ChronosEditor PUBLIC ${IMGUI_DIR})               
+target_include_directories(ChronosEditor PUBLIC ${IMGUI_BACKENDS})
+IncludeDirectories(ChronosEditor)
