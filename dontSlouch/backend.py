@@ -15,7 +15,7 @@ class Backend:
     
     def __init__(self,device="cpu"):
         self.model=slouch_detection()
-        self.model.load_state_dict(torch.load("model/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("../model/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
         self.pose=mp_pose.Pose(min_detection_confidence=0.8,min_tracking_confidence=0.8)

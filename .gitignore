@@ -58,3 +58,5 @@ dontSlouch/build
 dontSlouch/src/libtorch-cxx11-abi-shared-with-deps-2.3.0+cu121
 
 model/drive-download-20240429T114559Z-001
+dontSlouch/__pycache__
+dontSlouch/__pycache__/*
