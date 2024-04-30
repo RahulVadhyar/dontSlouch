@@ -23,7 +23,7 @@ class SettingsTab:
         self.device_choices = (('CPU', 'cpu'),
                         ('GPU', 'cuda'))
         self.selected_device = StringVar()
-        self.selected_device.set('cuda')
+        self.selected_device.set('cpu')
         
         for text, mode in self.device_choices:
             ttk.Radiobutton(self.device_frame, text=text, value=mode, variable=self.selected_device).pack(anchor=W, padx=10)
