@@ -8,7 +8,7 @@ class Backend:
     
     def __init__(self,device="cpu"):
         self.model=SlouchDetection()
-        self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
         self.mp_pose = mp.solutions.pose

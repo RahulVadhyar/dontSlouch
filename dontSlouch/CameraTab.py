@@ -34,39 +34,40 @@ class CameraTab:
         self.showSkeleton = not self.showSkeleton
     
     def openCamera(self):
-        _, frame = self.webcam.read()
-        frame, result, x, res = self.backend.backend(frame, device = self.device.get(), skeleton = self.showSkeleton)
-        self.result = result
-        self.modelValue = x
-        self.position = res
-        self.cumResult.append(self.result)
-        
-        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-        captured_image = Image.fromarray(opencv_image)
-        photo_image = ImageTk.PhotoImage(image=captured_image)
-        
-        
-        plt.style.use('dark_background')
-        plt.plot(self.cumResult, color='orange')
-        plt.xlabel("Time")
-        plt.ylabel("Posture")
-        plt.title("Yearly")
-        plt.savefig('temp.png')
-        self.label_widget.photo_image = photo_image
-        self.label_widget.configure(image=photo_image)
-        self.label_widget.after(10, self.openCamera)
-        
-        if self.result == "slouching":
-            self.slouching_label.config(text='You are slouching at this position')
-        else:
-            self.slouching_label.config(text='Congrats! You are not slouching')
-        
-        if self.result == "slouching" and self.notificationCounter == 0:
-            self.notificationCounter = 40
-            notification = Notify()
-            notification.title = "Dont Slouch!"
-            notification.message = "You are slouching! Please correct your posture."
-            notification.send()
-            print("inside")
-        elif self.result == "slouching":
-            self.notificationCounter -= 1
+        if self.cameraFrame.winfo_exists():
+            _, frame = self.webcam.read()
+            frame, result, x, res = self.backend.backend(frame, device = self.device.get(), skeleton = self.showSkeleton)
+            self.result = result
+            self.modelValue = x
+            self.position = res
+            self.cumResult.append(self.result)
+            
+            opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+            captured_image = Image.fromarray(opencv_image)
+            photo_image = ImageTk.PhotoImage(image=captured_image)
+            
+            
+            plt.style.use('dark_background')
+            plt.plot(self.cumResult, color='orange')
+            plt.xlabel("Time")
+            plt.ylabel("Posture")
+            plt.title("Yearly")
+            plt.savefig('temp.png')
+            self.label_widget.photo_image = photo_image
+            self.label_widget.configure(image=photo_image)
+            self.label_widget.after(10, self.openCamera)
+            
+            if self.result == "slouching":
+                self.slouching_label.config(text='You are slouching at this position')
+            else:
+                self.slouching_label.config(text='Congrats! You are not slouching')
+            
+            if self.result == "slouching" and self.notificationCounter == 0:
+                self.notificationCounter = 40
+                notification = Notify()
+                notification.title = "Dont Slouch!"
+                notification.message = "You are slouching! Please correct your posture."
+                notification.send()
+                print("inside")
+            elif self.result == "slouching":
+                self.notificationCounter -= 1
