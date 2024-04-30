@@ -18,14 +18,16 @@ class ProgressTab:
     """
     def __init__(self, notebook, resetProgress):
         self.progressFrame = ttk.Frame(notebook)
-        self.progressLabel = ttk.Label(self.progressFrame, text = 'Progress', font= ('Helvetica bold', 120))
-    
-        self.title_label = ttk.Label(self.progressFrame, text = "Sit up straight! Get the high score!",anchor="center",font= ('Helvetica bold', 120))
-        self.title_label.pack()
-        self.score_label = ttk.Label(self.progressFrame,anchor="center",font= ('Helvetica bold', 120))
-        self.score_label.pack()
-        self.max_score_label = ttk.Label(self.progressFrame,anchor="center",font= ('Helvetica bold', 120))
-        self.max_score_label.pack()
+        self.progressLabel = ttk.Label(self.progressFrame, text='Progress', font=('Helvetica', 24, 'bold'))
+
+        self.title_label = ttk.Label(self.progressFrame, text="Sit up straight! Get the high score!",
+                                     anchor="center", font=('Helvetica', 24, 'bold'))
+        self.title_label.pack(pady=(100, 10), expand=True)
         
-        self.progressFrame.pack(padx=10, pady=10, anchor = 'w')
+        self.score_label = ttk.Label(self.progressFrame, anchor="center", font=('Helvetica', 24, 'bold'))
+        self.score_label.pack(expand=True)
         
+        self.max_score_label = ttk.Label(self.progressFrame, anchor="center", font=('Helvetica', 24, 'bold'))
+        self.max_score_label.pack(expand=True)
+        
+        self.progressFrame.pack(padx=10, pady=10, anchor='w')

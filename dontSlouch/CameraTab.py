@@ -39,12 +39,24 @@ class CameraTab:
         self.cameraFrame = ttk.Frame(notebook)
         self.cameraLabel = ttk.Label(self.cameraFrame, text='Camera', font=('Helvetica', 40))
         self.cameraLabel.pack(padx=10, pady=10, anchor='w')
+        
+        # Enlarge image window
         self.label_widget = ttk.Label(self.cameraFrame)
-        self.label_widget.pack()
-        self.slouching_label = ttk.Label(self.cameraFrame)
-        self.slouching_label.pack()
-        self.showSkeletonButton = ttk.Button(self.cameraFrame, text='Show Skeleton', command=self.showSkeleton)
+        self.label_widget.pack(pady=10)  # Add spacing between image window and slouching label
+        
+        # Center slouching label horizontally and vertically
+        self.slouching_label = ttk.Label(self.cameraFrame, anchor='center', font=('Helvetica', 24, 'bold'))
+        self.slouching_label.pack(pady=(10, 5))  # Add spacing between slouching label and max score label
+        
+        # Center max score label horizontally and vertically
+        self.max_score_label = ttk.Label(self.cameraFrame, anchor='center', font=('Helvetica', 24, 'bold'))
+        self.max_score_label.pack(pady=(5, 10))  # Add spacing below max score label
+        style = ttk.Style()
+        style.configure('TButton', font=('Helvetica', 24, 'bold'))
+        self.showSkeletonButton = ttk.Button(self.cameraFrame, text='Show Skeleton', command=self.showSkeleton,padding=10,style="TButton")
+
         self.showSkeletonButton.pack()
+        
         self.showSkeleton = True
         self.notificationCounter = 10
         self.progressTab = progressTab
@@ -80,6 +92,7 @@ class CameraTab:
 
         opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
         captured_image = Image.fromarray(opencv_image)
+        # Enlarge image
         photo_image = ImageTk.PhotoImage(image=captured_image)
 
         self.label_widget.photo_image = photo_image
@@ -100,7 +113,7 @@ class CameraTab:
         if self.result == "slouching" and self.notificationCounter == 0:
             self.notificationCounter = 40
             notification = Notify()
-            notification.title = "Dont Slouch!"
+            notification.title = "Don't Slouch!"
             notification.message = f"You are slouching! Please correct your posture. Your max score is {self.maxScore}!"
             notification.send()
         elif self.result == "slouching":
