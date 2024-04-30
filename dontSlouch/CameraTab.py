@@ -3,9 +3,9 @@ from tkinter import ttk
 import cv2
 from PIL import Image, ImageTk 
 from notifypy import Notify
-import matplotlib.pyplot as plt
+
 class CameraTab:
-    def __init__(self, notebook, backend, device):
+    def __init__(self, notebook, backend, device, progressTab):
         self.cameraFrame = ttk.Frame(notebook)
         self.cameraLabel = ttk.Label(self.cameraFrame, text = 'Camera', font= ('Arial', 40))
         self.cameraLabel.pack(padx=10, pady=10, anchor = 'w')
@@ -17,8 +17,10 @@ class CameraTab:
         self.showSkeletonButton.pack()
         self.showSkeleton = True
         self.notificationCounter = 10
+        self.progressTab = progressTab
+        self.score = 0
+        self.maxScore = 0
         
-        self.cumResult = []
         self.device = device
         self.webcam = cv2.VideoCapture(0)
         self.width, self.height = 800, 600
@@ -34,40 +36,36 @@ class CameraTab:
         self.showSkeleton = not self.showSkeleton
     
     def openCamera(self):
-        if self.cameraFrame.winfo_exists():
-            _, frame = self.webcam.read()
-            frame, result, x, res = self.backend.backend(frame, device = self.device.get(), skeleton = self.showSkeleton)
-            self.result = result
-            self.modelValue = x
-            self.position = res
-            self.cumResult.append(self.result)
+        _, frame = self.webcam.read()
+        frame, result, x, res = self.backend.backend(frame, device = self.device.get(), skeleton = self.showSkeleton)
+        self.result = result
+        self.modelValue = x
+        self.position = res
+        
+        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+        captured_image = Image.fromarray(opencv_image)
+        photo_image = ImageTk.PhotoImage(image=captured_image)
+        
+        self.label_widget.photo_image = photo_image
+        self.label_widget.configure(image=photo_image)
+        self.label_widget.after(10, self.openCamera)
+        
+        if self.result == "slouching":
+            self.slouching_label.config(text='You are slouching at this position')
+            self.score = 0
+        else:
+            self.slouching_label.config(text='Congrats! You are not slouching')
+            self.score += 1
+            self.maxScore = max(self.score, self.maxScore)
             
-            opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-            captured_image = Image.fromarray(opencv_image)
-            photo_image = ImageTk.PhotoImage(image=captured_image)
-            
-            
-            plt.style.use('dark_background')
-            plt.plot(self.cumResult, color='orange')
-            plt.xlabel("Time")
-            plt.ylabel("Posture")
-            plt.title("Yearly")
-            plt.savefig('temp.png')
-            self.label_widget.photo_image = photo_image
-            self.label_widget.configure(image=photo_image)
-            self.label_widget.after(10, self.openCamera)
-            
-            if self.result == "slouching":
-                self.slouching_label.config(text='You are slouching at this position')
-            else:
-                self.slouching_label.config(text='Congrats! You are not slouching')
-            
-            if self.result == "slouching" and self.notificationCounter == 0:
-                self.notificationCounter = 40
-                notification = Notify()
-                notification.title = "Dont Slouch!"
-                notification.message = "You are slouching! Please correct your posture."
-                notification.send()
-                print("inside")
-            elif self.result == "slouching":
-                self.notificationCounter -= 1
+        self.progressTab.score_label.config(text=f'Score: {self.score}')
+        self.progressTab.max_score_label.config(text=f'Max Score: {self.maxScore}')
+        
+        if self.result == "slouching" and self.notificationCounter == 0:
+            self.notificationCounter = 40
+            notification = Notify()
+            notification.title = "Dont Slouch!"
+            notification.message = f"You are slouching! Please correct your posture. Your max score is {self.maxScore}!"
+            notification.send()
+        elif self.result == "slouching":
+            self.notificationCounter -= 1
