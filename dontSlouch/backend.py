@@ -8,7 +8,7 @@ class Backend:
     
     def __init__(self,device="cpu"):
         self.model=SlouchDetection()
-        self.model.load_state_dict(torch.load("../model/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
         self.mp_pose = mp.solutions.pose
@@ -62,7 +62,15 @@ class Backend:
             r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h #7
             r_shldr_z=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].z * h #8
             # Write posture data to CSV file
-            return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_x,r_shldr_y,r_shldr_z],dtype=np.float32).reshape(1,-1)
+
+            l_shldr_x -= r_shldr_x
+            l_shldr_y -= r_shldr_y
+            nose_x -= r_shldr_x
+            nose_y -= r_shldr_y
+            r_shldr_x = 0
+            r_shldr_y = 0
+
+            return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_z],dtype=np.float32).reshape(1,-1)
         else:
             print(f"No landmarks detected in image ")
             return np.array([])
@@ -109,8 +117,8 @@ class SlouchDetection(nn.Module):
     def __init__(self):
         super(SlouchDetection,self).__init__()
         self.layers = nn.Sequential(
-            nn.LayerNorm(9),
-            nn.Linear(9,36),
+            nn.LayerNorm(7),
+            nn.Linear(7,36),
             nn.ReLU(),
             nn.Linear(36,15),
             nn.ReLU(),
