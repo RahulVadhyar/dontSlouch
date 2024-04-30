@@ -40,7 +40,7 @@ class SettingsTab:
 
         # Logo
         self.logo_frame = ttk.Frame(self.settingsFrame)
-        self.logo_image = PhotoImage(file='Black White Elegant Monogram Initial Name Logo (1).png')
+        self.logo_image = PhotoImage(file='docs/Black White Elegant Monogram Initial Name Logo (1).png')
         self.logo_label = ttk.Label(self.logo_frame, image=self.logo_image)
         self.logo_label.pack(padx=10, pady=10)
         self.logo_frame.grid(row=3, column=2, padx=10, pady=10, sticky="se")  # Bottom right corner
