@@ -20,7 +20,6 @@ In healthcare, the posture detection system plays a crucial role in preventing a
   
 - **Deployment**: The system can be set up for easy use in everyday scenarios, such as at a workspace or during specific activities that require posture monitoring.
 
-![Flowchart](docs/Modern Project Management Process Infographic Graph.png "a title")
 
 ## Functionality
 
