@@ -6,7 +6,7 @@ import numpy as np
 
 class Backend:
     def __init__(self,device="cpu"):
-        self.model=SlouchDetection()
+        self.model=slouch_detection()
         self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
@@ -60,31 +60,44 @@ class Backend:
         h, w = image.shape[:2]
 
         if lm is not None:
-            nose_x = lm.landmark[self.mp_pose.PoseLandmark.NOSE].x * w #0
-            nose_y = lm.landmark[self.mp_pose.PoseLandmark.NOSE].y * h #1
-            nose_z = lm.landmark[self.mp_pose.PoseLandmark.NOSE].z * h #2 # Calculating Z-axis position
+            nose_x = lm.landmark[self.mp_pose.PoseLandmark.NOSE].x * w
+            nose_y = lm.landmark[self.mp_pose.PoseLandmark.NOSE].y * h
+            nose_z = lm.landmark[self.mp_pose.PoseLandmark.NOSE].z * h  # Calculating Z-axis position
 
-            l_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].x * w #3
-            l_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].y * h #4
-            l_shldr_z = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].z * h #5
-            r_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w #6
-            r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h #7
-            r_shldr_z=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].z * h #8
-            # Write posture data to CSV file
-
+            l_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].x * w
+            l_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].y * h
+            l_shldr_z = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].z * h
+            r_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w
+            r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h
+            r_shldr_z=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].z * h
             l_shldr_x -= r_shldr_x
             l_shldr_y -= r_shldr_y
-            nose_x -= r_shldr_x
+            nose_x -=r_shldr_x
             nose_y -= r_shldr_y
+
+            left_eye_x=lm.landmark[self.mp_pose.PoseLandmark.LEFT_EYE].x * w- r_shldr_x
+            left_eye_y=lm.landmark[self.mp_pose.PoseLandmark.LEFT_EYE].y * h- r_shldr_y
+            left_eye_z=lm.landmark[self.mp_pose.PoseLandmark.LEFT_EYE].z * h
+            right_eye_x=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_EYE].x * w- r_shldr_x
+            right_eye_y=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_EYE].y * h- r_shldr_y
+            right_eye_z=lm.landmark[self.mp_pose.PoseLandmark.RIGHT_EYE].z * h
+            left_lip_x=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_LEFT].x * w- r_shldr_x
+            left_lip_y=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_LEFT].y * h- r_shldr_y
+            left_lip_z=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_LEFT].z * h
+            right_lip_x=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_RIGHT].x * w- r_shldr_x
+            right_lip_y=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_RIGHT].y * h- r_shldr_y
+            right_lip_z=lm.landmark[self.mp_pose.PoseLandmark.MOUTH_RIGHT].z * h
+
             r_shldr_x = 0
             r_shldr_y = 0
 
-            return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_z],dtype=np.float32).reshape(1,-1)
+
+            return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_z,left_eye_x,left_eye_y,left_eye_z,right_eye_x,right_eye_y,right_eye_z,left_lip_x,left_lip_y,left_lip_z,right_lip_x,right_lip_y,right_lip_z],dtype=np.float32).reshape(1,-1)
         else:
             #print(f"No landmarks detected in image ")
             return np.array([])
     def modelLoad(self,device):
-        self.model=SlouchDetection()
+        self.model=slouch_detection()
         self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
@@ -112,7 +125,8 @@ class Backend:
             if(len(x.shape)!=1):
                 self.res= self.slouchDetector(x,self.model)
                 color=self.red
-                if(self.res>0.2):
+                print(self.res)
+                if(self.res>0.37):
                     self.result="not slouching"
                     color=self.green
                 else:
@@ -124,25 +138,17 @@ class Backend:
             raise ValueError("Webcam not found")
 
 
-class SlouchDetection(nn.Module):
+class slouch_detection(nn.Module):
     def __init__(self):
-        super(SlouchDetection,self).__init__()
+        super(slouch_detection,self).__init__()
         self.layers = nn.Sequential(
-            nn.LayerNorm(7),
-            nn.Linear(7,36),
-            nn.ReLU(),
-            nn.Linear(36,15),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(15,12),
-            nn.ReLU(),
-            nn.Linear(12,6),
-            nn.ReLU(),
-            nn.Linear(6,3),
-            nn.Dropout(0.2),
-            nn.ReLU(),
-            nn.Linear(3,1),
-            nn.Sigmoid()
-        )
+        nn.LayerNorm(19),
+        nn.Linear(19,64),
+        nn.SiLU(),
+        nn.Dropout(0.2),
+        nn.LayerNorm(64),
+        nn.Linear(64,1),
+        nn.Sigmoid()
+    )
     def forward(self,x):
         return self.layers(x)
