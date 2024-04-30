@@ -23,16 +23,16 @@ class MainWindow:
         
         #notebook for the tabs
         self.notebook = ttk.Notebook(self.window)  
-        self.progressTab = ProgressTab(self.notebook, self.backend, self.resetProgress)
-        self.cameraTab = CameraTab(self.notebook, self.backend)
         self.settingsTab = SettingsTab(self.notebook)
+        self.progressTab = ProgressTab(self.notebook, self.backend, self.resetProgress)
+        self.cameraTab = CameraTab(self.notebook, self.backend, self.settingsTab.selected_device)
         
         #progress of user posture
         self.currentProgress = 0
         
+        self.notebook.add(self.progressTab.progressFrame, text = 'Progress')
         self.notebook.add(self.cameraTab.cameraFrame, text = 'Camera')
         self.notebook.add(self.settingsTab.settingsFrame, text = 'Settings')
-        self.notebook.add(self.progressTab.progressFrame, text = 'Progress')
         self.notebook.pack(expand = True, fill = 'both')
         self.window.pack(expand = True, fill = 'both')
         self.root.mainloop()

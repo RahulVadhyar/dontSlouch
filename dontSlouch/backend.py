@@ -68,7 +68,7 @@ class Backend:
             return np.array([])
     def modelLoad(self,device):
         self.model=SlouchDetection()
-        self.model.load_state_dict(torch.load("model/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("../model/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
 
