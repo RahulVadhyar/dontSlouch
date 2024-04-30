@@ -20,7 +20,7 @@ class ProgressTab:
         
     def plot(self):
          # Load the image
-        self.image = PhotoImage(file="temp.png")
+        self.image = PhotoImage(file="dontSlouch/temp.png")
         self.label_widget.photo_image = self.image
         self.label_widget.configure(image=self.image)
         self.label_widget.after(10, self.plot)

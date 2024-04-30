@@ -103,7 +103,7 @@ class Backend:
             if(len(x.shape)!=1):
                 self.res= self.slouchDetector(x,self.model)
                 color=self.red
-                if(self.res>0.3):
+                if(self.res>0.4):
                     self.result="not slouching"
                     color=self.green
                 else:
