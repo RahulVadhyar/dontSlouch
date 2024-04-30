@@ -61,7 +61,7 @@ PROJECT_BRIEF          = "Posture Detection using AI"
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = "/home/rahul/Documents/dontSlouch/Black White Elegant Monogram Initial Name Logo (1).png"
+PROJECT_LOGO           = "/home/rahul/Documents/dontSlouch/docs/Black White Elegant Monogram Initial Name Logo (1).png"
 
 # With the PROJECT_ICON tag one can specify an icon that is included in the tabs
 # when the HTML document is shown. Doxygen will copy the logo to the output
@@ -949,7 +949,8 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = /home/rahul/Documents/dontSlouch
+INPUT                  = /home/rahul/Documents/dontSlouch \
+                         ../README.md
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1167,7 +1168,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = README.md
 
 # The Fortran standard specifies that for fixed formatted Fortran code all
 # characters from position 72 are to be considered as comment. A common
@@ -1367,9 +1368,7 @@ HTML_STYLESHEET        =
 # documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = /home/rahul/Documents/dontSlouch/ThirdParty/doxygen-awesome-css/doxygen-awesome.css \
-                         /home/rahul/Documents/dontSlouch/ThirdParty/doxygen-awesome-css/doxygen-awesome-sidebar-only.css \
-                         /home/rahul/Documents/dontSlouch/ThirdParty/doxygen-awesome-css/doxygen-awesome.css
+HTML_EXTRA_STYLESHEET  = /home/rahul/Documents/dontSlouch/ThirdParty/doxygen-awesome-css/doxygen-awesome.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -2460,7 +2459,7 @@ SKIP_FUNCTION_MACROS   = YES
 # the path). If a tag file is not located in the directory in which doxygen is
 # run, you must also specify the path to the tagfile here.
 
-TAGFILES               =
+TAGFILES               = ../README.md
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create a
 # tag file that is based on the input files it reads. See section "Linking to
