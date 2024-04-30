@@ -110,7 +110,9 @@ class Backend:
                     self.result="slouching"
                 if(skeleton):
                     self.drawPoseLandmarks(image,lm,color=color)
-        return (image,self.result,x,self.res)
+            return (image,self.result,x,self.res)
+        else:
+            raise ValueError("Webcam not found")
 
 
 class SlouchDetection(nn.Module):
