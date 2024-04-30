@@ -62,8 +62,8 @@ In healthcare, the posture detection system plays a crucial role in preventing a
 
 ## Acknowledgments
 
-- This project is made possible by the contributions of [contributors].
-- Special thanks to [mentors or advisors] for their guidance and support.
+- This project is made possible by the contributions of @Amaan12345678,Abdul Amaan, Priya MG, Sharanya S.
+- Special thanks to Department of Machine Learning for their guidance and support.
 
 ## License
 
