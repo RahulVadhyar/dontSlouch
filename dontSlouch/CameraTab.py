@@ -7,7 +7,7 @@ from notifypy import Notify
 class CameraTab:
     def __init__(self, notebook, backend, device, progressTab):
         self.cameraFrame = ttk.Frame(notebook)
-        self.cameraLabel = ttk.Label(self.cameraFrame, text = 'Camera', font= ('Arial', 40))
+        self.cameraLabel = ttk.Label(self.cameraFrame, text = 'Camera', font= ('Helvetica', 40))
         self.cameraLabel.pack(padx=10, pady=10, anchor = 'w')
         self.label_widget = ttk.Label(self.cameraFrame)
         self.label_widget.pack()

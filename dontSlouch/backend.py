@@ -8,7 +8,7 @@ class Backend:
     
     def __init__(self,device="cpu"):
         self.model=SlouchDetection()
-        self.model.load_state_dict(torch.load("slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
         self.mp_pose = mp.solutions.pose
@@ -72,11 +72,11 @@ class Backend:
 
             return np.array([nose_x, nose_y, nose_z, l_shldr_x,l_shldr_y,l_shldr_z,r_shldr_z],dtype=np.float32).reshape(1,-1)
         else:
-            print(f"No landmarks detected in image ")
+            #print(f"No landmarks detected in image ")
             return np.array([])
     def modelLoad(self,device):
         self.model=SlouchDetection()
-        self.model.load_state_dict(torch.load("../model/slouch_detector.pt"))
+        self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
         self.model = self.model.to(device)
         self.cur_device=device
 
@@ -103,7 +103,7 @@ class Backend:
             if(len(x.shape)!=1):
                 self.res= self.slouchDetector(x,self.model)
                 color=self.red
-                if(self.res>0.4):
+                if(self.res>0.2):
                     self.result="not slouching"
                     color=self.green
                 else:
