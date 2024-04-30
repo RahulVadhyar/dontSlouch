@@ -90,7 +90,7 @@ class Backend:
         self.cur_device=device
 
     def slouchDetector(self,x,model):
-        x=torch.tensor(x)
+        x=torch.tensor(x).to(self.cur_device)
         with torch.inference_mode():
             model.eval()
             ans=model(x)
