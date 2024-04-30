@@ -5,7 +5,6 @@ from torch import nn
 import numpy as np
 
 class Backend:
-    
     def __init__(self,device="cpu"):
         self.model=SlouchDetection()
         self.model.load_state_dict(torch.load("dontSlouch/slouch_detector.pt"))
@@ -19,17 +18,26 @@ class Backend:
         self.res=-1
         self.x=0
 
-    def drawPoseLandmarks(self,image, lm, color=(255, 0, 0), thickness=2):
+    def drawPoseLandmarks(self, image, lm, color=(255, 0, 0), thickness=2):
+        """
+        Draw pose landmarks on the image.
 
+        Args:
+            image (numpy.ndarray): The input image.
+            lm (mediapipe.framework.formats.landmark_pb2.NormalizedLandmarkList): The pose landmarks.
+            color (tuple, optional): The color of the landmarks. Defaults to (255, 0, 0).
+            thickness (int, optional): The thickness of the lines. Defaults to 2.
+
+        Returns:
+            numpy.ndarray: The image with pose landmarks drawn.
+        """
         h, w = image.shape[:2]
-        nose_x = lm.landmark[self.mp_pose.PoseLandmark.NOSE].x * w #0
-        nose_y = lm.landmark[self.mp_pose.PoseLandmark.NOSE].y * h #1
-
-        l_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].x * w #3
-        l_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].y * h #4
-        r_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w #6
-        r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h #7
-
+        nose_x = lm.landmark[self.mp_pose.PoseLandmark.NOSE].x * w
+        nose_y = lm.landmark[self.mp_pose.PoseLandmark.NOSE].y * h
+        l_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].x * w
+        l_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].y * h
+        r_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w
+        r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h
 
         if nose_x and nose_y:
             cv2.circle(image, (int(nose_x), int(nose_y)), 7, color, -1)
@@ -38,13 +46,14 @@ class Backend:
         if r_shldr_x and r_shldr_y:
             cv2.circle(image, (int(r_shldr_x), int(r_shldr_y)), 7, color, -1)
 
-        # Draw lines between shoulders and nose (assuming you have detection logic)
         if l_shldr_x and l_shldr_y and r_shldr_x and r_shldr_y and nose_x and nose_y:
             cv2.line(image, (int(l_shldr_x), int(l_shldr_y)), (int(r_shldr_x), int(r_shldr_y)), color, 2)
             cv2.line(image, (int((l_shldr_x+r_shldr_x)/2), int((l_shldr_y+r_shldr_y)/2)), (int(nose_x), int(nose_y)), color, 2)
+
         return image
 
     def processImage(self,image, lm, draw_skeleton=False):
+        
         if image is None:
             print(f"Failed to read image")
             return
