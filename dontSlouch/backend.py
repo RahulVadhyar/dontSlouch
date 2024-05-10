@@ -32,24 +32,54 @@ class Backend:
             numpy.ndarray: The image with pose landmarks drawn.
         """
         h, w = image.shape[:2]
+    
+        # Extracting coordinates for nose, left shoulder, and right shoulder
         nose_x = lm.landmark[self.mp_pose.PoseLandmark.NOSE].x * w
         nose_y = lm.landmark[self.mp_pose.PoseLandmark.NOSE].y * h
         l_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].x * w
         l_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_SHOULDER].y * h
         r_shldr_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].x * w
         r_shldr_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_SHOULDER].y * h
-
+        
+        # Drawing nose, left shoulder, and right shoulder
         if nose_x and nose_y:
             cv2.circle(image, (int(nose_x), int(nose_y)), 7, color, -1)
         if l_shldr_x and l_shldr_y:
             cv2.circle(image, (int(l_shldr_x), int(l_shldr_y)), 7, color, -1)
         if r_shldr_x and r_shldr_y:
             cv2.circle(image, (int(r_shldr_x), int(r_shldr_y)), 7, color, -1)
-
+        
+        # Drawing lines between shoulders and nose
         if l_shldr_x and l_shldr_y and r_shldr_x and r_shldr_y and nose_x and nose_y:
             cv2.line(image, (int(l_shldr_x), int(l_shldr_y)), (int(r_shldr_x), int(r_shldr_y)), color, 2)
             cv2.line(image, (int((l_shldr_x+r_shldr_x)/2), int((l_shldr_y+r_shldr_y)/2)), (int(nose_x), int(nose_y)), color, 2)
-
+        
+        # Extracting coordinates for eyes and lips
+        left_eye_x = lm.landmark[self.mp_pose.PoseLandmark.LEFT_EYE].x * w
+        left_eye_y = lm.landmark[self.mp_pose.PoseLandmark.LEFT_EYE].y * h
+        right_eye_x = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_EYE].x * w
+        right_eye_y = lm.landmark[self.mp_pose.PoseLandmark.RIGHT_EYE].y * h
+        left_lip_x = lm.landmark[self.mp_pose.PoseLandmark.MOUTH_LEFT].x * w
+        left_lip_y = lm.landmark[self.mp_pose.PoseLandmark.MOUTH_LEFT].y * h
+        right_lip_x = lm.landmark[self.mp_pose.PoseLandmark.MOUTH_RIGHT].x * w
+        right_lip_y = lm.landmark[self.mp_pose.PoseLandmark.MOUTH_RIGHT].y * h
+        
+        # Drawing eyes and lips
+        if left_eye_x and left_eye_y:
+            cv2.circle(image, (int(left_eye_x), int(left_eye_y)), 7, color, -1)
+        if right_eye_x and right_eye_y:
+            cv2.circle(image, (int(right_eye_x), int(right_eye_y)), 7, color, -1)
+        if left_lip_x and left_lip_y:
+            cv2.circle(image, (int(left_lip_x), int(left_lip_y)), 7, color, -1)
+        if right_lip_x and right_lip_y:
+            cv2.circle(image, (int(right_lip_x), int(right_lip_y)), 7, color, -1)
+        
+        # Drawing lines between eyes and lips
+        if left_eye_x and left_eye_y and right_eye_x and right_eye_y:
+            cv2.line(image, (int(left_eye_x), int(left_eye_y)), (int(right_eye_x), int(right_eye_y)), color, 2)
+        if left_lip_x and left_lip_y and right_lip_x and right_lip_y:
+            cv2.line(image, (int(left_lip_x), int(left_lip_y)), (int(right_lip_x), int(right_lip_y)), color, 2)
+        
         return image
 
     def processImage(self,image, lm, draw_skeleton=False):
